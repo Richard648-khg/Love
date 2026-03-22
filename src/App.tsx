@@ -136,8 +136,19 @@ export default function App() {
     }
   };
 
+  const pageVariants = {
+    initial: { opacity: 0, scale: 1.05, filter: 'blur(10px)' },
+    animate: { opacity: 1, scale: 1, filter: 'blur(0px)' },
+    exit: { opacity: 0, scale: 0.95, filter: 'blur(10px)' }
+  };
+
+  const pageTransition = {
+    duration: 1.2,
+    ease: [0.43, 0.13, 0.23, 0.96]
+  };
+
   return (
-    <div className="min-h-screen font-sans selection:bg-passion-red/30">
+    <div className="min-h-screen font-sans selection:bg-passion-red/30 overflow-x-hidden">
       <div className="film-grain" />
       <audio ref={audioRef} src={PIANO_MELODY_URL} loop />
 
@@ -152,17 +163,18 @@ export default function App() {
         {step === 'hero' && (
           <motion.section
             key="hero"
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-            transition={{ duration: 1.5 }}
+            variants={pageVariants}
+            initial="initial"
+            animate="animate"
+            exit="exit"
+            transition={pageTransition}
             className="relative h-screen flex items-center justify-center overflow-hidden"
           >
             {heroImg ? (
               <motion.div 
                 initial={{ scale: 1.1 }}
                 animate={{ scale: 1 }}
-                transition={{ duration: 10, ease: "linear" }}
+                transition={{ duration: 15, ease: "linear" }}
                 className="absolute inset-0 bg-cover bg-center"
                 style={{ backgroundImage: `url(${heroImg})` }}
               />
@@ -175,9 +187,9 @@ export default function App() {
             
             <div className="relative z-10 text-center px-4">
               <motion.h1 
-                initial={{ y: 20, opacity: 0 }}
+                initial={{ y: 30, opacity: 0 }}
                 animate={{ y: 0, opacity: 1 }}
-                transition={{ delay: 0.5, duration: 1 }}
+                transition={{ delay: 0.8, duration: 1.2 }}
                 className="font-serif text-4xl md:text-7xl text-gold mb-8 drop-shadow-2xl"
               >
                 Une petite surprise t'attend ici...
@@ -185,7 +197,7 @@ export default function App() {
               <motion.button
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
-                transition={{ delay: 1.5 }}
+                transition={{ delay: 1.8, duration: 1 }}
                 onClick={() => setStep('test')}
                 className="px-10 py-4 rounded-full border-2 border-gold text-gold font-medium tracking-widest uppercase text-sm hover:bg-gold hover:text-rose-white transition-all duration-500 shadow-[0_0_20px_rgba(212,175,55,0.3)]"
               >
@@ -198,9 +210,11 @@ export default function App() {
         {step === 'test' && (
           <motion.section
             key="test"
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
+            variants={pageVariants}
+            initial="initial"
+            animate="animate"
+            exit="exit"
+            transition={pageTransition}
             className="h-screen flex flex-col items-center justify-center bg-rose-white px-4 relative overflow-hidden"
           >
             {/* Subtle background pattern */}
@@ -209,8 +223,9 @@ export default function App() {
 
             <motion.div 
               className="max-w-2xl w-full text-center space-y-16 relative z-10"
-              initial={{ y: 20 }}
-              animate={{ y: 0 }}
+              initial={{ y: 30, opacity: 0 }}
+              animate={{ y: 0, opacity: 1 }}
+              transition={{ delay: 0.5, duration: 1 }}
             >
               <div className="space-y-6">
                 <motion.div
@@ -258,8 +273,10 @@ export default function App() {
         {step === 'climax' && (
           <motion.section
             key="climax"
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
+            variants={pageVariants}
+            initial="initial"
+            animate="animate"
+            transition={pageTransition}
             className="relative min-h-screen flex flex-col items-center justify-center bg-rose-white py-20 px-6 overflow-hidden"
           >
             {/* Animated Background */}
